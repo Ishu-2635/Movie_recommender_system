@@ -1,3 +1,5 @@
+import os
+import zipfile
 import pickle
 import requests
 import pandas as pd
@@ -9,6 +11,11 @@ try:
     movie_list = movie_list['title'].values  # Extract movie titles as an array
     movie_ids = pd.read_pickle('movies.pkl')
     movie_ids = movie_ids['movie_id'].values
+    
+    # Check and extract from zip if needed
+    if not os.path.exists("similarity.pkl"):
+        with zipfile.ZipFile("similarity.zip", 'r') as zip_ref:
+            zip_ref.extractall()
     similarity = pickle.load(open('similarity.pkl', 'rb'))
 except Exception as e:
     st.error(f"Error loading data: {e}")
