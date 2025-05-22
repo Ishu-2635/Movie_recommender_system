@@ -43,6 +43,6 @@ This is an interactive Movie Recommender System built with **Python**, **Streaml
 ├── app.py # Streamlit main app
 ├── movies.pkl # Pickled DataFrame with movie titles and IDs
 ├── similarity.pkl # Pickled similarity matrix (cosine similarities)
-├── README.md # Project documentation
+├── README.md #Project documentation
 
 
