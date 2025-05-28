@@ -4,6 +4,17 @@ import pandas as pd
 import streamlit as st
 import io
 import gdown
+st.set_page_config(
+    page_title="Your App Title",  # Change to your app's title
+                  
+    layout="wide",                # Or "centered"
+    initial_sidebar_state="collapsed",  # Optional: auto-collapse sidebar
+    menu_items={
+        "Get Help": None,
+        "Report a bug": None,
+        "About": "Made with ❤️ using Streamlit"  # You can change this or set to None
+    }
+)
 
 
 try:
@@ -178,17 +189,7 @@ if st.button('Recommend'):
 
                                 st.session_state.clicked_movie = recommended_movies[i]
                                 st.session_state.clicked_movie_details = {}
-st.set_page_config(
-    page_title="Your App Title",  # Change to your app's title
-                  
-    layout="wide",                # Or "centered"
-    initial_sidebar_state="collapsed",  # Optional: auto-collapse sidebar
-    menu_items={
-        "Get Help": None,
-        "Report a bug": None,
-        "About": "Made with ❤️ using Streamlit"  # You can change this or set to None
-    }
-)
+
                         
 
                         # Show movie details if the movie was clicked
