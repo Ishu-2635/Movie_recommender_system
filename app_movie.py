@@ -16,7 +16,7 @@ except Exception as e:
 @st.cache_data(show_spinner="Downloading similarity matrix...")
 def load_similarity_from_drive(file_id):
     try:
-        url = f"https://drive.google.com/uc?id={file_id}"
+        url = f"https://drive.google.com/uc?export=download&id={file_id}"
         response = requests.get(url)
         response.raise_for_status()
         similarity_matrix = pickle.load(io.BytesIO(response.content))
