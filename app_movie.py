@@ -15,7 +15,8 @@ def load_similarity_from_drive(file_id):
         return None
 
     with gzip.GzipFile(fileobj=io.BytesIO(response.content)) as f:
-        return pickle.load(f)
+        similarity = pickle.load(f)
+        return similarity
 try:
     movie_list = pd.read_pickle('movies.pkl')
     movie_list = movie_list['title'].values  # Extract movie titles as an array
