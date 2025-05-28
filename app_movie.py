@@ -2,15 +2,27 @@ import pickle
 import requests
 import pandas as pd
 import streamlit as st
+import gzip
+import io
 
 # Load movie list and similarity matrix with error handling
+@st.cache_data(show_spinner="Downloading similarity matrix...")
+def load_similarity_from_drive(file_id):
+    url = f"https://drive.google.com/uc?id={file_id}"
+    response = requests.get(url)
+    if response.status_code != 200:
+        st.error("Failed to download similarity matrix.")
+        return None
+
+    with gzip.GzipFile(fileobj=io.BytesIO(response.content)) as f:
+        return pickle.load(f)
 try:
     movie_list = pd.read_pickle('movies.pkl')
     movie_list = movie_list['title'].values  # Extract movie titles as an array
     movie_ids = pd.read_pickle('movies.pkl')
     movie_ids = movie_ids['movie_id'].values
     
-    similarity = pickle.load(open('similarity.pkl', 'rb'))
+   # similarity = pickle.load(open('similarity.pkl', 'rb'))
 except Exception as e:
     st.error(f"Error loading data: {e}")
     
