@@ -15,15 +15,16 @@ def load_similarity_from_drive(file_id):
         return None
 
     with gzip.GzipFile(fileobj=io.BytesIO(response.content)) as f:
-        similarity = pickle.load(f)
-        return similarity
+        return pickle.load(f)
+  
 try:
     movie_list = pd.read_pickle('movies.pkl')
     movie_list = movie_list['title'].values  # Extract movie titles as an array
     movie_ids = pd.read_pickle('movies.pkl')
     movie_ids = movie_ids['movie_id'].values
     
-   # similarity = pickle.load(open('similarity.pkl', 'rb'))
+    file_id = '1awSMdkzLX7-Z58_U46yv_oEsYS7IzD5H'
+    similarity = load_similarity_from_drive(file_id)
 except Exception as e:
     st.error(f"Error loading data: {e}")
     
