@@ -2,7 +2,7 @@ import pickle
 import requests
 import pandas as pd
 import streamlit as st
-import gzip
+import zipfile
 import io
 
 # Load movie list and similarity matrix with error handling
@@ -14,8 +14,13 @@ def load_similarity_from_drive(file_id):
         st.error("Failed to download similarity matrix.")
         return None
 
-    with gzip.GzipFile(fileobj=io.BytesIO(response.content)) as f:
-        return pickle.load(f)
+         zip_bytes = io.BytesIO(response.content)
+        with zipfile.ZipFile(zip_bytes, 'r') as zip_ref:
+            # Assuming the zip contains 'similarity.pkl'
+            with zip_ref.open('similarity.pkl') as f:
+                similarity_matrix = pickle.load(f)
+
+        return similarity_matrix
   
 try:
     movie_list = pd.read_pickle('movies.pkl')
