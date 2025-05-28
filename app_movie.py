@@ -5,6 +5,9 @@ import streamlit as st
 import io
 import gdown
 
+# Hide the sidebar
+st.set_page_config(initial_sidebar_state="collapsed")
+
 try:
     movie_df = pd.read_pickle('movies.pkl')
     movie_list = movie_df['title'].values
