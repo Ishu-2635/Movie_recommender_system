@@ -71,6 +71,17 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+st.markdown(
+    """
+    <style>
+    header [data-testid="stHeader"] a[href*="github.com"] {
+        display: none;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 
 
 # Fetch poster, rating, and overview
