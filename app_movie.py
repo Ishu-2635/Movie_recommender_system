@@ -14,7 +14,7 @@ def load_similarity_from_drive(file_id):
         st.error("Failed to download similarity matrix.")
         return None
 
-         zip_bytes = io.BytesIO(response.content)
+        zip_bytes = io.BytesIO(response.content)
         with zipfile.ZipFile(zip_bytes, 'r') as zip_ref:
             # Assuming the zip contains 'similarity.pkl'
             with zip_ref.open('similarity.pkl') as f:
