@@ -2,37 +2,37 @@ import pickle
 import requests
 import pandas as pd
 import streamlit as st
-import zipfile
 import io
+
+try:
+    movie_df = pd.read_pickle('movies.pkl')
+    movie_list = movie_df['title'].values
+    movie_ids = movie_df['movie_id'].values
+except Exception as e:
+    st.error(f"Error loading movie list: {e}")
+    st.stop()
 
 # Load movie list and similarity matrix with error handling
 @st.cache_data(show_spinner="Downloading similarity matrix...")
 def load_similarity_from_drive(file_id):
-    url = f"https://drive.google.com/uc?id={file_id}"
-    response = requests.get(url)
-    if response.status_code != 200:
-        st.error("Failed to download similarity matrix.")
+    try:
+        url = f"https://drive.google.com/uc?id={file_id}"
+        response = requests.get(url)
+        response.raise_for_status()
+        similarity_matrix = pickle.load(io.BytesIO(response.content))
+        return similarity_matrix
+    except Exception as e:
+        st.error(f"Failed to load similarity matrix: {e}")
         return None
 
-        zip_bytes = io.BytesIO(response.content)
-        with zipfile.ZipFile(zip_bytes, 'r') as zip_ref:
-            # Assuming the zip contains 'similarity.pkl'
-            with zip_ref.open('similarity.pkl') as f:
-                similarity_matrix = pickle.load(f)
 
-        return similarity_matrix
-  
-try:
-    movie_list = pd.read_pickle('movies.pkl')
-    movie_list = movie_list['title'].values  # Extract movie titles as an array
-    movie_ids = pd.read_pickle('movies.pkl')
-    movie_ids = movie_ids['movie_id'].values
-    
-    file_id = '1awSMdkzLX7-Z58_U46yv_oEsYS7IzD5H'
-    similarity = load_similarity_from_drive(file_id)
-except Exception as e:
-    st.error(f"Error loading data: {e}")
-    
+file_id = "1b_vub9X7pjen0iv7pYx7LNIHnpFnWJ9U"
+
+similarity = load_similarity_from_drive(file_id)
+
+if similarity is None:
+    st.stop()
+
 # Additional Styling
 st.markdown("""
     <style>
