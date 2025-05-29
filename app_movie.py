@@ -4,6 +4,15 @@ import pandas as pd
 import streamlit as st
 import io
 import gdown
+hide_st_style = """
+    <style>
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    .viewerBadge_container__1QSob {display: none;}
+    </style>
+"""
+
+st.markdown(hide_st_style, unsafe_allow_html=True)
 
 
 try:
